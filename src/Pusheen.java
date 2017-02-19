@@ -41,7 +41,10 @@ public class Pusheen extends DoubleBufferedCanvas {
 
 		pusheens = new ImageIcon[numPusheens];
 		for(int i=1;i<=pusheens.length;i++){
-			String f = "/pusheens/" + i + ".gif";
+
+			 // When I compiled this with IntelliJ I needed the following line, but if you JAR everything up sanely you'll probably want the second line.
+			String f = i + ".gif";
+			//String f = "/pusheens/" + i + ".gif";
 			pusheens[i-1] = new ImageIcon(getClass().getResource(f));
 		}
 	}

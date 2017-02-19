@@ -9,7 +9,7 @@ import java.awt.Image;
  *
  */
 @SuppressWarnings("serial")
-abstract class DoubleBufferedCanvas extends Canvas implements Runnable{
+abstract class DoubleBufferedCanvas extends Canvas implements Runnable {
 
 	protected Thread thread;
 	
