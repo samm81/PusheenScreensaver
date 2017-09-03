@@ -1,15 +1,17 @@
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 
 @SuppressWarnings("serial")
 public class Pusheen extends DoubleBufferedCanvas {
-	
+
 	final int numPusheens = 34;
-	
+
 	ImageIcon defaultPusheen;
 	ImageIcon[] pusheens;
 
@@ -33,9 +35,42 @@ public class Pusheen extends DoubleBufferedCanvas {
 	long maxPause = 6300;
 	long lastTime = System.currentTimeMillis();
 
+	private static Color backgroundColor = new Color(252, 240, 228);
+
+	static int mouseMovements = 0;  //required for a windows bug
+
+	public static void main(String[] args) {
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		int screenWidth = (int)screen.getWidth();
+		int screenHeight = (int)screen.getHeight();
+		JFrame f = new JFrame();
+		f.setBounds(0,0,screenWidth,screenHeight);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setUndecorated(true);
+
+        DoubleBufferedCanvas c = new Pusheen(30);
+		c.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				System.exit(0);
+			}
+		});
+		c.addMouseMotionListener(new MouseMotionAdapter(){
+			public void mouseMoved(MouseEvent e){
+				// required for a windows bug
+				mouseMovements++;
+				if(mouseMovements > 2)
+					System.exit(0);
+			}
+		});
+		f.add(c);
+		c.setBackground(backgroundColor);
+		f.setVisible(true);
+		f.toFront();
+	}
+
 	public Pusheen(int fps) {
 		super(fps);
-		
+
 		defaultPusheen = new ImageIcon(getClass().getResource("default.gif"));
 		pusheen = defaultPusheen.getImage();
 
